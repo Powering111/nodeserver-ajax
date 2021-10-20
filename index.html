@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #data{
+            border:2px solid cyan;
+            background-color:aquamarine;
+            border-radius:5px;
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size:20px;
+        }
+        a{
+            background-color: blue;
+            color:white;
+            font-size:20px;
+            border-radius:8px;
+            padding:4px;
+        }
+        a:hover{
+            background-color:rgb(57, 57, 255);
+        }
+    </style>
+</head>
+<body>
+    <a onclick="sendRequest()">refresh</a>
+    <pre id="data">
+
+    </pre>
+    <script type="text/javascript">
+        function sendRequest(){
+            const XHR = new XMLHttpRequest()
+            XHR.onreadystatechange=function(){
+                if(this.status==200 && this.readyState==this.DONE){
+                    console.log(XHR.responseText);
+                    document.getElementById('data').innerHTML=XHR.responseText;
+                }
+            }
+            XHR.open("GET", "/data", true);
+            XHR.send();
+        }
+    </script>
+</body>
+</html>
