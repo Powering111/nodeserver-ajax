@@ -7,24 +7,25 @@ function handleListen(){
 }
 function handleHome(req,res){
 
-    fs.readFile('./index.html','utf-8',(err,data)=>{
+    fs.readFile('res/'+req.path,'utf-8',(err,data)=>{
             res.set('content-type','text/html');
             res.send(data);
-      
     })
 }
 function handleData(req,res){
     // fs.readFile('./yeah.html',(err,data)=>{
     //     res.send(data + Date.now());
     // });
-    db.selectProblems(function(result){
-        res.json(result);
-    });
+    db.selectProblems().then((result)=>{
+        res.json(result); }
+    );
 }
 function handleUserList(req,res){
 
 }
-app.get('/',handleHome);
+app.get('/',(req,res)=>{res.redirect('./index.html');});
+app.get('/index.html',handleHome);
+app.get('*.js',handleHome);
 app.get('/data',handleData);
 app.get('/userList',handleUserList);
 app.listen(80,handleListen);

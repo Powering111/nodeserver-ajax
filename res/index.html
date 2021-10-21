@@ -27,21 +27,9 @@
 </head>
 <body>
     <a onclick="sendRequest()">refresh</a>
-    <pre id="data">
+    <table id="data">
 
-    </pre>
-    <script type="text/javascript">
-        function sendRequest(){
-            const XHR = new XMLHttpRequest()
-            XHR.onreadystatechange=function(){
-                if(this.status==200 && this.readyState==this.DONE){
-                    console.log(XHR.responseText);
-                    document.getElementById('data').innerHTML=XHR.responseText;
-                }
-            }
-            XHR.open("GET", "/data", true);
-            XHR.send();
-        }
-    </script>
+    </table>
+    <script type="text/javascript" src='connect.js'></script>
 </body>
 </html>
