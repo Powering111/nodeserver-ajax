@@ -8,15 +8,17 @@ function handleListen(){
 function handleHome(req,res){
 
     fs.readFile('./index.html','utf-8',(err,data)=>{
-            console.log(data);
             res.set('content-type','text/html');
             res.send(data);
       
     })
 }
 function handleData(req,res){
-    fs.readFile('./yeah.html',(err,data)=>{
-        res.send(data + Date.now().toString());
+    // fs.readFile('./yeah.html',(err,data)=>{
+    //     res.send(data + Date.now());
+    // });
+    db.selectProblems(function(result){
+        res.json(result);
     });
 }
 function handleUserList(req,res){
