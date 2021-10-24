@@ -16,12 +16,15 @@ function handleData(req,res){
     // fs.readFile('./yeah.html',(err,data)=>{
     //     res.send(data + Date.now());
     // });
-    db.selectProblems().then((result)=>{
-        res.json(result); }
-    );
+    db.selectProblems(0,30).then((result)=>{
+        res.json(result); 
+    });
 }
 function handleUserList(req,res){
-
+    db.selectUsers(0,30).then((result)=>{
+        res.json(result);
+        console.log(result);
+    });
 }
 app.get('/',(req,res)=>{res.redirect('./index.html');});
 app.get('/index.html',handleHome);

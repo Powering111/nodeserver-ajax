@@ -1,14 +1,14 @@
 const pg=require('pg');
 const config = {
     user : 'onlinejudge',
-    host : '18.218.217.203',
+    host : '18.191.59.199',
     database : 'onlinejudge',
     password : 'onlinejudge',
     port : 5432
 };
 const pool = new pg.Pool(config);
 
-const query = async function(q){
+const runQuery = async function(q){
     const client = await pool.connect();
     let res;
     try{
@@ -25,10 +25,24 @@ const query = async function(q){
     }
     return res;
 }
-exports.selectProblems=async function(){
+
+
+exports.selectProblems=async function(start,limit){
     try{
-        const {rows} = await query('SELECT * FROM problem LIMIT 30');
+        const {rows} = await runQuery(`SELECT * FROM problem LIMIT ${limit} OFFSET ${start}`);
         return rows;
+    }
+    catch(err){
+        console.log("Database "+err);
+    }
+}
+
+exports.selectUsers = async function(start,limit){
+    try{
+        const {user} = await runQuery(`SELECT * FROM public.user`);
+        const {profile} = await runQuery(`SELECT * FROM public.user_profile LIMIT ${limit} OFFSET ${start}`)
+        console.log(user);
+        return {user:user,profile:profile};
     }
     catch(err){
         console.log("Database "+err);
